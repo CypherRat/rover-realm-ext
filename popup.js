@@ -1,4 +1,3 @@
-// popup.js
 document.addEventListener("DOMContentLoaded", function () {
   const welcomeDiv = document.getElementById("welcome");
   const nameForm = document.getElementById("nameForm");
@@ -69,23 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
     welcomeDiv.style.opacity = "0";
     setTimeout(() => (welcomeDiv.style.display = "none"), 100);
     chrome.storage.sync.get(["name", "data"], renderData);
-    // chrome.storage.sync.get(["name"], function (result) {
-    //   if (result.name) {
-    //     greetingDiv.textContent = "Hello, " + result.name;
-    //     mainContentDiv.style.display = "block";
-    //     nameInput.value = result.name;
-    //     goBackButton.style.display = "block";
-    //     setTimeout(function () {
-    //       mainContentDiv.style.opacity = "1";
-    //     }, 10);
-    //   } else {
-    //     nameForm.style.display = "flex";
-    //     setTimeout(function () {
-    //       nameForm.style.opacity = "1";
-    //     }, 10);
-    //     goBackButton.style.display = "none";
-    //   }
-    // });
   }, 5000);
 
   // Click Functions
@@ -126,7 +108,6 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   //   addtional
-
   hamburger.addEventListener("click", () => {
     if (tabs.style.right === "0px") {
       tabs.style.right = "-200px";
@@ -228,7 +209,6 @@ document.addEventListener("DOMContentLoaded", function () {
     loadingDivText.textContent = "Please wait, refreshing...";
     setTimeout(() => (loadingDivText.textContent = ""), 2500);
     chrome.runtime.sendMessage({ action: "checkAndFetchData" }, (response) => {
-      // console.log(chrome.runtime.lastError.message ?? "Message sent");
       if (chrome.runtime.lastError) {
         console.log(chrome.runtime.lastError.message);
       } else {
@@ -286,12 +266,8 @@ function createContentNode(title, response) {
     linkElement.href = "https://xoxno.com/buy/RoverRealm/RRLM";
     linkElement.textContent = "Buy Rover";
   } else if (title === "events") {
-    // clone.querySelector('[data-id="content"]').textContent =
-    //   JSON.stringify(response);
     clone = populateEvents(template, response);
   } else if (title === "claimToEarn") {
-    // clone.querySelector('[data-id="content"]').textContent =
-    //   JSON.stringify(response);
     clone = cloneTemplate2(template, response);
   } else if (title === "claimToEarnWinners") {
     clone.querySelector('[data-id="content"]').textContent =
