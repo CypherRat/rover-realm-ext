@@ -1,19 +1,10 @@
-// chrome.action.onClicked.addListener((tab) => {
-//   chrome.windows.create(
-//     { url: chrome.runtime.getURL("popup.html") },
-//     (window) => {
-//       chrome.windows.update(window.id, { width: 400, height: 400 });
-//     }
-//   );
-// });
-
 let state = {
   date: "",
   data: {},
 };
 
 chrome.runtime.onInstalled.addListener(() => {
-  // fetchAndStoreData();
+  fetchAndStoreData();
   setAlarmForNextDay();
 });
 
@@ -22,7 +13,7 @@ chrome.runtime.onStartup.addListener(() => {
     console.log(date);
     const today = new Date().toISOString().split("T")[0];
     if (date !== today) {
-      // fetchAndStoreData();
+      fetchAndStoreData();
     }
   });
 });
@@ -37,21 +28,6 @@ chrome.alarms.onAlarm.addListener((alarm) => {
     });
   }
 });
-
-// chrome.runtime.onConnect.addListener((port) => {
-//   console.log("Connected .....");
-//   port.onMessage.addListener((msg) => {
-//     console.log("Message recieved" + msg);
-//     if (msg === "checkAndFetchData") {
-//       chrome.storage.sync.get(["date"], ({ date }) => {
-//         const today = new Date().toISOString().split("T")[0];
-//         if (date !== today) {
-//           fetchAndStoreData();
-//         }
-//       });
-//     }
-//   });
-// });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "checkAndFetchData") {
@@ -106,11 +82,6 @@ async function fetchAndStoreData() {
 
 function setAlarmForNextDay() {
   const now = new Date();
-  // const tomorrow = new Date(
-  //   now.getFullYear(),
-  //   now.getMonth(),
-  //   now.getDate() + 1
-  // );
 
   const tomorrow = new Date(
     Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1)
