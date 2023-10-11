@@ -1,4 +1,3 @@
-<!-- popup.html -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -89,14 +88,6 @@
         align-items: center;
         box-shadow: 1px 1px 10px 10px rgba(0, 0, 0, 0.1);
       }
-      /* #loading {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-grow: 1;
-        gap: 1.5rem;
-        flex-direction: column;
-      } */
       #tabs {
         display: none;
         right: -200px;
@@ -105,7 +96,6 @@
         background-position: bottom center;
         background-repeat: no-repeat;
         background-size: 150px 150px;
-        /* box-shadow: 0px 0px 100px 100px rgb(100 100 100 / 50%); */
       }
       #tabs::before,
       #tabs::after {
@@ -525,58 +515,6 @@
         </a>
       </footer>
     </div>
-
-    <!-- Good to have -->
-    <!-- <div
-      id="content"
-      class="bg-blue-900 h-full w-full absolute p-6 fade shadow-lg rounded-lg"
-    >
-      <div id="header" class="flex justify-between items-center mb-4">
-        <div class="text-2xl font-bold text-gray-200">RoverRealm</div>
-        <i
-          id="hamburger"
-          class="fa-solid fa-bars-staggered fa-2x text-gray-200"
-        ></i>
-      </div>
-      <div id="greet" class="flex justify-between items-center mb-4">
-        <div id="greeting" class="text-lg font-medium text-gray-200">
-          Hello, User!
-        </div>
-        <i id="editButton" class="fa-solid fa-pen fa-lg text-gray-200"></i>
-      </div>
-      <div id="tabs" class="flex flex-col mb-4 bg-gray-100 p-4 rounded-lg">
-        <h2 class="text-xl mb-4 font-semibold">Rover Land</h2>
-        <ul class="list-disc list-inside">
-          <li>About</li>
-        </ul>
-      </div>
-      <div id="content-container" class="bg-white p-4 rounded-lg shadow-inner">
-        <h2 id="heading" class="text-xl mb-4 font-semibold">Rovers Title</h2>
-        <div id="contents" class="overflow-auto">Rovers Data</div>
-      </div>
-    </div> -->
-
-    <!-- Working Model Below -->
-    <!-- <div id="content" class="bg-blue-200 h-full w-full absolute p-6 fade">
-      <div id="header">
-        <div class="text-2xl">RoverRealm</div>
-        <i id="hamburger" class="fa-solid fa-bars-staggered fa-2x"></i>
-      </div>
-      <div id="greet">
-        <div id="greeting">Hello, User!</div>
-        <i id="editButton" class="fa-solid fa-pen fa-lg"></i>
-      </div>
-      <div id="tabs" class="flex mb-4 bg-gray-100 p-4">
-        <h2 class="text-xl mb-4">Rover Land</h2>
-        <ul>
-          <li>About</li>
-        </ul>
-      </div>
-      <div id="content-container">
-        <h2 id="heading" class="text-xl mb-4">Rovers Title</h2>
-        <div id="contents" class="overflow-auto">Rovers Data</div>
-      </div>
-    </div> -->
     <div
       id="progressBar"
       class="h-1 bg-blue-200 absolute bottom-0 left-0 w-full"
@@ -612,12 +550,6 @@
         </div>
       </div>
     </template>
-    <!-- <template id="eventsTemp">
-      <div id="nodeBox">
-        <div data-id="content"></div>
-      </div>
-    </template> -->
-
     <template id="eventsTemp">
       <div id="event-list" class="space-y-4">
         <div
@@ -651,54 +583,16 @@
           </div>
         </div>
       </div>
-      <!-- <div id="event-list" class="space-y-4">
-        <div
-          class="shadow overflow-hidden sm:rounded-lg p-4 mb-4"
-          data-id="event"
-        >
-          <div class="flex justify-between items-center mb-2">
-            <h3
-              class="text-lg leading-6 font-medium text-gray-900"
-              data-id="title"
-            ></h3>
-            <p class="text-sm text-gray-500 italic" data-id="status"></p>
-          </div>
-          <p class="text-sm text-gray-500" data-id="description"></p>
-          <div class="flex justify-between items-center">
-            <p
-              class="text-xs bg-gray-200 text-gray-700 p-2 rounded mb-2"
-              data-id="timeline"
-            ></p>
-            <a
-              href="#"
-              data-id="url"
-              class="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-900"
-              ><i class="fa-solid fa-up-right-from-square"></i
-            ></a>
-          </div>
-        </div>
-      </div> -->
     </template>
-    <!-- <template id="claimToEarnTemp">
-      <div id="nodeBox">
-        <div data-id="content"></div>
-      </div>
-    </template> -->
     <template id="claimToEarnWinnersTemp">
       <div id="nodeBox">
         <div data-id="content"></div>
       </div>
     </template>
-
-    <!-- temp -->
     <template id="claimToEarnTemp">
-      <!-- <div data-id="content"></div> -->
       <div class="shadow-lg rounded-lg overflow-hidden" data-id="">
-        <!-- <h2 class="text-center text-blue-500 p-2" data-id="date"></h2> -->
         <div class="relative group mb-4">
-          <div class="slider" data-id="slider">
-            <!-- Images will be inserted here -->
-          </div>
+          <div class="slider" data-id="slider"></div>
           <button
             class="prev absolute top-1/2 left-0 ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
             data-id="prev"
