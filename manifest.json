@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "TEST EXT",
+  "version": "3.0",
+  "description": "RoverRealm brings you a one stop glance of everything happening at Rover Land here.",
+  "permissions": ["tabs", "storage", "alarms"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": ["http://*/*", "https://*/*"]
+}

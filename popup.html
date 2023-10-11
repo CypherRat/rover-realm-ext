@@ -1,0 +1,729 @@
+<!-- popup.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/fontawesome.min.css" />
+    <link rel="stylesheet" href="css/regular.min.css" />
+    <link rel="stylesheet" href="css/solid.min.css" />
+    <link rel="stylesheet" href="css/brands.min.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Open+Sans&family=Sen&family=Poppins&family=Trade+Winds&family=Monoton&display=swap");
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Sen", sans-serif;
+        background: linear-gradient(to bottom, #000000 0%, #000033 100%);
+        overflow: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #888 #f1f1f1;
+      }
+      /* Scrollbar */
+      /* width */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: #888;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+      /* Scrollbar end */
+      .fade {
+        transition: opacity 100ms ease-in-out;
+      }
+      .roverHeader {
+        font-family: "Trade Winds", sans-serif;
+        text-shadow: 0 1px 1px #272823;
+      }
+      .roverHeader > div:nth-of-type(even) {
+        color: #e5fe68;
+      }
+      .note {
+        font-family: "Poppins", sans-serif;
+      }
+      .space-bg {
+        background: linear-gradient(to bottom, #000000 0%, #000033 100%);
+      }
+      #countdown {
+        font-family: "Monoton", cursive;
+      }
+      #welcome,
+      #loading {
+        background-image: url("startScreen.svg");
+        background-position: bottom center;
+        background-size: 40% auto;
+        background-repeat: no-repeat;
+      }
+
+      #loading {
+        background-image: url("loadingScreen.svg");
+        background-position: top 25% center;
+      }
+
+      /* Content Section Styling */
+      #content.tabsActive::before {
+        content: "";
+        position: fixed;
+        width: 100%;
+        z-index: 1;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      #header {
+        display: none;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 1px 1px 10px 10px rgba(0, 0, 0, 0.1);
+      }
+      /* #loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        gap: 1.5rem;
+        flex-direction: column;
+      } */
+      #tabs {
+        display: none;
+        right: -200px;
+        width: 200px;
+        background-image: url("boat.svg");
+        background-position: bottom center;
+        background-repeat: no-repeat;
+        background-size: 150px 150px;
+        /* box-shadow: 0px 0px 100px 100px rgb(100 100 100 / 50%); */
+      }
+      #tabs::before,
+      #tabs::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50px;
+        height: 1rem;
+        background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
+        translate: 0% -100%;
+      }
+      #tabs::after {
+        translate: -80% -100%;
+        background-color: #3730a3;
+        border-bottom-right-radius: 10px;
+      }
+      #tabs > div {
+        margin-bottom: 1rem;
+        box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.5);
+        border-bottom-left-radius: 10px;
+        padding: 10px;
+        cursor: pointer;
+        border-top-left-radius: 10px;
+        transition: all 100ms ease-in-out;
+      }
+      #tabs > div:not(.active-tab):hover {
+        background-color: rgba(55, 48, 163, 0.5);
+        color: #fff;
+      }
+      #tabs.show {
+        right: 0;
+      }
+      .tab-button {
+        width: auto;
+        overflow: auto;
+      }
+      #content-container {
+        overflow-y: auto;
+        margin-bottom: 1rem !important;
+      }
+      .active-tab {
+        background-color: rgba(55, 48, 163, 0.8); /* highlight the active tab */
+        color: #fff;
+      }
+
+      #rotd-nodeMain {
+        display: grid;
+        grid-template: "IMAGE STAMP" "IMAGE STAMP" "CTA CTA";
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+      }
+
+      #rotd-nodeMain #roverStamp {
+        grid-area: STAMP;
+        writing-mode: vertical-lr;
+        /* text-orientation: upright; */
+        height: 100%;
+        font-weight: bold;
+        font-size: 2rem;
+        letter-spacing: 19px;
+        color: rgb(74, 204, 120);
+        position: relative;
+      }
+      #rotd-nodeMain #roverStamp::before {
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        content: "\f103";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        color: gold;
+        animation: flickDown 250ms infinite alternate forwards;
+      }
+      #rotd-nodeMain #imgTitle {
+        position: relative;
+        grid-area: IMAGE;
+      }
+      #rotd-nodeMain #imgTitle [data-id="image"] {
+        position: relative;
+        min-height: 278px;
+        display: block;
+      }
+      #rotd-nodeMain #imgTitle [data-id="image"]::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+        width: 48px;
+        height: 48px;
+        border: 5px solid #fff;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+      }
+      #rotd-nodeMain #imgTitle [data-id="title"] {
+        position: absolute;
+        top: 5px;
+        left: 10px;
+        font-size: 2rem;
+        color: lavenderblush;
+        font-family: "Trade Winds", sans-serif;
+      }
+      #rotd-nodeMain #ctaDetails {
+        grid-area: CTA;
+      }
+      #rotd-nodeMain #ctaDetails [data-id="roverId"] {
+        font-family: "Poppins", sans-serif;
+      }
+      #content #footer {
+        box-shadow: -1px -1px 20px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      #heading {
+        position: relative;
+        transition: all 250ms ease-in-out;
+        overflow: hidden;
+      }
+      #heading::before,
+      #heading::after {
+        content: "";
+        position: absolute;
+        bottom: 50%;
+        translate: 0% 50%;
+        width: 5px;
+        border-radius: 50%;
+        height: 5px;
+        background: rgba(100, 200, 300, 0.2);
+      }
+      #heading::before {
+        animation: headingBefore 2.5s infinite alternate forwards;
+      }
+      #heading::after {
+        animation: headingAfter 2.5s infinite alternate forwards;
+      }
+      .sectionTitle {
+        font-size: 1rem;
+        color: #ffd9d9;
+        font-family: "Poppins", sans-serif;
+        margin-bottom: 1.5rem;
+        position: relative;
+      }
+      .sectionTitle::before,
+      .sectionTitle::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 2.5px;
+        background-color: #a5a5a5;
+        translate: 0% 100%;
+        border-radius: 5px;
+      }
+      .sectionTitle::after {
+        bottom: -5px;
+        width: 25px;
+      }
+
+      #banner {
+        background-image: url("welcomeRovers.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center -3px;
+        height: 100px;
+      }
+      @keyframes flickDown {
+        to {
+          bottom: -10px;
+        }
+      }
+      @keyframes rotation {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes headingBefore {
+        0%,
+        100% {
+          left: 50%;
+          width: 50px;
+          height: 50px;
+          translate: -50% 50%;
+        }
+        50% {
+          width: 0px;
+          height: 0px;
+          left: 0%;
+        }
+        100% {
+          scale: 2;
+          width: 100px;
+          border-radius: 5px;
+        }
+      }
+      @keyframes headingAfter {
+        0%,
+        100% {
+          right: 50%;
+          width: 50px;
+          height: 50px;
+          translate: 50% 50%;
+        }
+        50% {
+          width: 0px;
+          height: 0px;
+          right: 0%;
+        }
+        100% {
+          scale: 2;
+          width: 100px;
+          border-radius: 5px;
+        }
+      }
+    </style>
+  </head>
+  <body style="width: 400px; height: 500px">
+    <noscript>This extension requires JavaScript to work.</noscript>
+    <div
+      id="welcome"
+      class="mb-4 bg-purple-700 text-white h-full w-full absolute flex flex-col items-center justify-center text-2xl font-bold fade || bg-gradient-to-b from-purple-700 via-purple-600 to-purple-500 z-100"
+    >
+      <div class="flex text-4xl tracking-wider roverHeader">
+        <div style="transform: rotate(-10deg)">R</div>
+        <div style="transform: rotate(10deg)">o</div>
+        <div style="transform: rotate(-10deg)">v</div>
+        <div style="transform: rotate(10deg)">e</div>
+        <div style="transform: rotate(-10deg)">r</div>
+        <div style="transform: rotate(10deg)">R</div>
+        <div style="transform: rotate(-10deg)">e</div>
+        <div style="transform: rotate(10deg)">a</div>
+        <div style="transform: rotate(-10deg)">l</div>
+        <div style="transform: rotate(10deg)">m</div>
+      </div>
+      <div class="mt-4 text-sm font-base tracking-widest text-gray-300">
+        Initializing RoverLand
+      </div>
+      <div id="countdown" class="text-4xl mt-6"></div>
+    </div>
+    <form
+      id="nameForm"
+      class="flex flex-col items-center justify-center h-full w-full space-bg text-white mb-4 fade"
+    >
+      <div class="flex flex-col items-center justify-center space-y-4">
+        <h1 id="formHeader" class="text-lg mb-4">Set Alias</h1>
+        <input
+          id="nameInput"
+          type="text"
+          autocomplete="off"
+          placeholder="What's your good name?"
+          class="border p-2 rounded-md bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg w-full md:w-3/4 lg:w-1/2"
+          required
+        />
+        <div class="flex space-x-2 mt-4">
+          <button
+            id="goBackButton"
+            class="bg-red-500 text-white p-2 rounded-md hover:bg-red-700 transition-colors duration-200 ease-in-out"
+          >
+            Go Back
+          </button>
+          <button
+            type="submit"
+            class="bg-green-500 text-white p-2 rounded-md hover:bg-green-700 transition-colors duration-200 ease-in-out"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+      <div
+        class="w-full mt-auto text-center p-2 bg-gray-700 text-gray-300 rounded-t-md text-xs absolute bottom-0"
+      >
+        Alias is used to display your name in contest winner list.
+      </div>
+    </form>
+    <div
+      id="loading"
+      class="flex flex-col items-center justify-end h-full w-full space-bg text-white mb-4 fade"
+    >
+      <div class="flex flex-col items-center justify-center mb-20 space-y-4">
+        <button
+          id="refreshButton"
+          class="bg-blue-500 text-white p-2 rounded-md hover:bg-green-700 transition-colors duration-200 ease-in-out"
+        >
+          Refresh
+        </button>
+        <span id="loading-text"></span>
+      </div>
+      <div
+        class="w-full mt-auto text-center p-2 bg-gray-700 text-gray-300 rounded-t-md text-xs absolute bottom-0"
+      >
+        Arena is still loading, try clicking on refresh.
+      </div>
+    </div>
+
+    <div
+      id="content"
+      class="bg-gradient-to-b from-indigo-700 via-indigo-600 to-green-500 h-full w-full absolute fade shadow-lg flex flex-col overflow-y-auto space-y-4"
+    >
+      <header
+        id="header"
+        class="flex justify-between items-center sticky top-0 z-40 bg-gradient-to-b from-indigo-800 to-indigo-700 p-4"
+      >
+        <h1 class="text-2xl font-bold text-gray-200">RoverRealm</h1>
+        <i
+          id="hamburger"
+          class="fa-solid fa-bars-staggered fa-2x text-gray-200 cursor-pointer"
+        ></i>
+      </header>
+      <section id="greet" class="flex justify-between items-center px-4">
+        <div
+          id="greetingBox"
+          class="flex justify-between items-center space-x-2"
+        >
+          <i class="fa-solid fa-user fa-lg text-indigo-200 cursor-pointer"></i>
+          <p id="greeting" class="text-lg font-medium text-gray-200">
+            Hello, User!
+          </p>
+        </div>
+        <i
+          id="editButton"
+          class="fa-solid fa-pen fa-lg text-gray-200 cursor-pointer"
+        ></i>
+      </section>
+      <nav
+        id="tabs"
+        class="flex flex-col bg-gray-100 p-4 rounded-tl-lg shadow-md fixed right-0 top-0 h-full transition-width duration-200 ease-in-out z-50"
+      >
+        <h2 class="text-xl mb-4 font-semibold">Rover Land</h2>
+      </nav>
+      <section
+        id="banner"
+        class="bg-blue-200 mx-4 rounded-md shadow-inner"
+      ></section>
+      <section class="roverData w-full px-4">
+        <header class="sectionTitle">New on RoverLand!!</header>
+        <main
+          id="content-container"
+          class="bg-white p-4 rounded-lg shadow-inner flex-grow"
+        >
+          <h2
+            id="heading"
+            class="text-xl mb-4 text-center text-gray-600 font-semibold"
+          ></h2>
+          <div id="contents" class="overflow-auto"></div>
+        </main>
+        <footer class="sectionDetails space-y-4">
+          <div class="sectionTitle">Info & Greets</div>
+          <div class="sectionInfo">
+            <span
+              class="text-xl font-bold text-green-200 block mb-2"
+              id="sectionInfoTitle"
+              >What is this contest?</span
+            >
+            <p id="sectionInfoTxt" class="text-gray-300">
+              Read more details about the contest
+              <a
+                href="https://t.me/RoverRealm"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-green-200 hover:text-green-300"
+              >
+                here</a
+              >.
+            </p>
+          </div>
+          <p
+            class="p-4 bg-green-100 text-green-900 text-center rounded-md shadow-inner"
+          >
+            You can reach out to us or share your feedback on our social media
+            handles provided below.
+          </p>
+        </footer>
+      </section>
+      <footer
+        id="footer"
+        class="w-full grid grid-cols-4 gap-4 bg-transparent border-t border-green-600 p-2 py-4 items-center"
+      >
+        <a
+          href="https://xoxno.com/collection/RRLM-93384b"
+          class="text-2xl text-center text-white hover:text-green-200 transition-colors duration-200"
+          target="_blank"
+        >
+          <i class="fa-solid fa-globe"></i>
+        </a>
+        <a
+          href="https://www.twitter.com/RoverRealm"
+          class="text-2xl text-center text-white hover:text-green-200 transition-colors duration-200"
+          target="_blank"
+        >
+          <i class="fa-brands fa-twitter"></i>
+        </a>
+        <a
+          href="https://www.t.me/RoverRealm"
+          class="text-2xl text-center text-white hover:text-green-200 transition-colors duration-200"
+          target="_blank"
+        >
+          <i class="fa-brands fa-telegram"></i>
+        </a>
+        <a
+          href="https://www.discord.com/invite/uPfU3GEpXA"
+          class="text-2xl text-center text-white hover:text-green-200 transition-colors duration-200"
+          target="_blank"
+        >
+          <i class="fa-brands fa-discord"></i>
+        </a>
+      </footer>
+    </div>
+
+    <!-- Good to have -->
+    <!-- <div
+      id="content"
+      class="bg-blue-900 h-full w-full absolute p-6 fade shadow-lg rounded-lg"
+    >
+      <div id="header" class="flex justify-between items-center mb-4">
+        <div class="text-2xl font-bold text-gray-200">RoverRealm</div>
+        <i
+          id="hamburger"
+          class="fa-solid fa-bars-staggered fa-2x text-gray-200"
+        ></i>
+      </div>
+      <div id="greet" class="flex justify-between items-center mb-4">
+        <div id="greeting" class="text-lg font-medium text-gray-200">
+          Hello, User!
+        </div>
+        <i id="editButton" class="fa-solid fa-pen fa-lg text-gray-200"></i>
+      </div>
+      <div id="tabs" class="flex flex-col mb-4 bg-gray-100 p-4 rounded-lg">
+        <h2 class="text-xl mb-4 font-semibold">Rover Land</h2>
+        <ul class="list-disc list-inside">
+          <li>About</li>
+        </ul>
+      </div>
+      <div id="content-container" class="bg-white p-4 rounded-lg shadow-inner">
+        <h2 id="heading" class="text-xl mb-4 font-semibold">Rovers Title</h2>
+        <div id="contents" class="overflow-auto">Rovers Data</div>
+      </div>
+    </div> -->
+
+    <!-- Working Model Below -->
+    <!-- <div id="content" class="bg-blue-200 h-full w-full absolute p-6 fade">
+      <div id="header">
+        <div class="text-2xl">RoverRealm</div>
+        <i id="hamburger" class="fa-solid fa-bars-staggered fa-2x"></i>
+      </div>
+      <div id="greet">
+        <div id="greeting">Hello, User!</div>
+        <i id="editButton" class="fa-solid fa-pen fa-lg"></i>
+      </div>
+      <div id="tabs" class="flex mb-4 bg-gray-100 p-4">
+        <h2 class="text-xl mb-4">Rover Land</h2>
+        <ul>
+          <li>About</li>
+        </ul>
+      </div>
+      <div id="content-container">
+        <h2 id="heading" class="text-xl mb-4">Rovers Title</h2>
+        <div id="contents" class="overflow-auto">Rovers Data</div>
+      </div>
+    </div> -->
+    <div
+      id="progressBar"
+      class="h-1 bg-blue-200 absolute bottom-0 left-0 w-full"
+    >
+      <div
+        id="progress"
+        class="h-full bg-yellow-500 transition-all ease-in-out w-0"
+      ></div>
+    </div>
+
+    <!-- Templates -->
+    <template id="roverOfTheDayTemp">
+      <div id="rotd-nodeMain">
+        <div id="roverStamp">ROVER</div>
+        <div id="imgTitle" class="w-full">
+          <img
+            data-id="image"
+            src=""
+            class="w-full h-full bg-gray-600 rounded-lg"
+          />
+          <div data-id="title"></div>
+        </div>
+        <div id="ctaDetails" class="flex justify-between items-center">
+          <div data-id="roverId" class="text-xl text-indigo-400 font-semibold">
+            #0
+          </div>
+          <button
+            data-id="knowmore"
+            class="bg-green-500 text-white p-2 rounded-md hover:bg-green-700 transition-colors duration-200 ease-in-out"
+          >
+            <a data-id="link" href="" target="_blank"></a>
+          </button>
+        </div>
+      </div>
+    </template>
+    <!-- <template id="eventsTemp">
+      <div id="nodeBox">
+        <div data-id="content"></div>
+      </div>
+    </template> -->
+
+    <template id="eventsTemp">
+      <div id="event-list" class="space-y-4">
+        <div
+          class="shadow overflow-hidden mb-4 sm:rounded-lg p-4 space-y-4 flex flex-col"
+          data-id="event"
+        >
+          <div class="flex justify-between items-center mb-2">
+            <h3
+              class="text-lg leading-6 font-medium text-gray-900"
+              data-id="title"
+            ></h3>
+            <p
+              class="text-sm text-gray-500 ml-auto italic"
+              data-id="status"
+            ></p>
+          </div>
+          <p
+            class="bg-red-200 text-red-800 p-2 rounded mb-2"
+            data-id="timeline"
+            style="font-size: 12px"
+          ></p>
+          <p class="text-xs text-gray-500 mb-2" data-id="description"></p>
+          <div class="flex justify-between items-center">
+            <div class="h-4 w-4 rounded-full mr-2" data-id="status-dot"></div>
+            <a
+              href="#"
+              data-id="url"
+              class="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-900"
+              ><i class="fa-solid fa-up-right-from-square"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <!-- <div id="event-list" class="space-y-4">
+        <div
+          class="shadow overflow-hidden sm:rounded-lg p-4 mb-4"
+          data-id="event"
+        >
+          <div class="flex justify-between items-center mb-2">
+            <h3
+              class="text-lg leading-6 font-medium text-gray-900"
+              data-id="title"
+            ></h3>
+            <p class="text-sm text-gray-500 italic" data-id="status"></p>
+          </div>
+          <p class="text-sm text-gray-500" data-id="description"></p>
+          <div class="flex justify-between items-center">
+            <p
+              class="text-xs bg-gray-200 text-gray-700 p-2 rounded mb-2"
+              data-id="timeline"
+            ></p>
+            <a
+              href="#"
+              data-id="url"
+              class="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-900"
+              ><i class="fa-solid fa-up-right-from-square"></i
+            ></a>
+          </div>
+        </div>
+      </div> -->
+    </template>
+    <!-- <template id="claimToEarnTemp">
+      <div id="nodeBox">
+        <div data-id="content"></div>
+      </div>
+    </template> -->
+    <template id="claimToEarnWinnersTemp">
+      <div id="nodeBox">
+        <div data-id="content"></div>
+      </div>
+    </template>
+
+    <!-- temp -->
+    <template id="claimToEarnTemp">
+      <!-- <div data-id="content"></div> -->
+      <div class="shadow-lg rounded-lg overflow-hidden" data-id="">
+        <!-- <h2 class="text-center text-blue-500 p-2" data-id="date"></h2> -->
+        <div class="relative group mb-4">
+          <div class="slider" data-id="slider">
+            <!-- Images will be inserted here -->
+          </div>
+          <button
+            class="prev absolute top-1/2 left-0 ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+            data-id="prev"
+          >
+            Prev
+            <i class="fa-solid fa-angles-left"></i>
+          </button>
+          <button
+            class="next absolute top-1/2 right-0 mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+            data-id="next"
+          >
+            Next
+          </button>
+        </div>
+        <div class="flex justify-between items-center">
+          <p data-id="p"></p>
+          <button
+            class="claim bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            data-id="claim"
+          >
+            Claim
+          </button>
+        </div>
+      </div>
+    </template>
+  </body>
+  <script src="popup.js"></script>
+</html>
