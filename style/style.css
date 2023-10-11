@@ -1,0 +1,312 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Open+Sans&family=Sen&family=Poppins&family=Trade+Winds&family=Monoton&display=swap");
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Sen", sans-serif;
+  background: linear-gradient(to bottom, #000000 0%, #000033 100%);
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+/* Scrollbar */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+/* Scrollbar end */
+.fade {
+  transition: opacity 100ms ease-in-out;
+}
+.roverHeader {
+  font-family: "Trade Winds", sans-serif;
+  text-shadow: 0 1px 1px #272823;
+}
+.roverHeader > div:nth-of-type(even) {
+  color: #e5fe68;
+}
+.note {
+  font-family: "Poppins", sans-serif;
+}
+.space-bg {
+  background: linear-gradient(to bottom, #000000 0%, #000033 100%);
+}
+#countdown {
+  font-family: "Monoton", cursive;
+}
+#welcome,
+#loading {
+  background-image: url("startScreen.svg");
+  background-position: bottom center;
+  background-size: 40% auto;
+  background-repeat: no-repeat;
+}
+
+#loading {
+  background-image: url("loadingScreen.svg");
+  background-position: top 25% center;
+}
+
+/* Content Section Styling */
+#content.tabsActive::before {
+  content: "";
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+#header {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 1px 1px 10px 10px rgba(0, 0, 0, 0.1);
+}
+#tabs {
+  display: none;
+  right: -200px;
+  width: 200px;
+  background-image: url("boat.svg");
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background-size: 150px 150px;
+}
+#tabs::before,
+#tabs::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 1rem;
+  background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
+  translate: 0% -100%;
+}
+#tabs::after {
+  translate: -80% -100%;
+  background-color: #3730a3;
+  border-bottom-right-radius: 10px;
+}
+#tabs > div {
+  margin-bottom: 1rem;
+  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.5);
+  border-bottom-left-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  border-top-left-radius: 10px;
+  transition: all 100ms ease-in-out;
+}
+#tabs > div:not(.active-tab):hover {
+  background-color: rgba(55, 48, 163, 0.5);
+  color: #fff;
+}
+#tabs.show {
+  right: 0;
+}
+.tab-button {
+  width: auto;
+  overflow: auto;
+}
+#content-container {
+  overflow-y: auto;
+  margin-bottom: 1rem !important;
+}
+.active-tab {
+  background-color: rgba(55, 48, 163, 0.8); /* highlight the active tab */
+  color: #fff;
+}
+
+#rotd-nodeMain {
+  display: grid;
+  grid-template: "IMAGE STAMP" "IMAGE STAMP" "CTA CTA";
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+#rotd-nodeMain #roverStamp {
+  grid-area: STAMP;
+  writing-mode: vertical-lr;
+  /* text-orientation: upright; */
+  height: 100%;
+  font-weight: bold;
+  font-size: 2rem;
+  letter-spacing: 19px;
+  color: rgb(74, 204, 120);
+  position: relative;
+}
+#rotd-nodeMain #roverStamp::before {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  content: "\f103";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: gold;
+  animation: flickDown 250ms infinite alternate forwards;
+}
+#rotd-nodeMain #imgTitle {
+  position: relative;
+  grid-area: IMAGE;
+}
+#rotd-nodeMain #imgTitle [data-id="image"] {
+  position: relative;
+  min-height: 278px;
+  display: block;
+}
+#rotd-nodeMain #imgTitle [data-id="image"]::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 48px;
+  height: 48px;
+  border: 5px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+#rotd-nodeMain #imgTitle [data-id="title"] {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  font-size: 2rem;
+  color: lavenderblush;
+  font-family: "Trade Winds", sans-serif;
+}
+#rotd-nodeMain #ctaDetails {
+  grid-area: CTA;
+}
+#rotd-nodeMain #ctaDetails [data-id="roverId"] {
+  font-family: "Poppins", sans-serif;
+}
+#content #footer {
+  box-shadow: -1px -1px 20px 5px rgba(0, 0, 0, 0.1);
+}
+
+#heading {
+  position: relative;
+  transition: all 250ms ease-in-out;
+  overflow: hidden;
+}
+#heading::before,
+#heading::after {
+  content: "";
+  position: absolute;
+  bottom: 50%;
+  translate: 0% 50%;
+  width: 5px;
+  border-radius: 50%;
+  height: 5px;
+  background: rgba(100, 200, 300, 0.2);
+}
+#heading::before {
+  animation: headingBefore 2.5s infinite alternate forwards;
+}
+#heading::after {
+  animation: headingAfter 2.5s infinite alternate forwards;
+}
+.sectionTitle {
+  font-size: 1rem;
+  color: #ffd9d9;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+.sectionTitle::before,
+.sectionTitle::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 2.5px;
+  background-color: #a5a5a5;
+  translate: 0% 100%;
+  border-radius: 5px;
+}
+.sectionTitle::after {
+  bottom: -5px;
+  width: 25px;
+}
+
+#banner {
+  background-image: url("welcomeRovers.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center -3px;
+  height: 100px;
+}
+@keyframes flickDown {
+  to {
+    bottom: -10px;
+  }
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes headingBefore {
+  0%,
+  100% {
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    translate: -50% 50%;
+  }
+  50% {
+    width: 0px;
+    height: 0px;
+    left: 0%;
+  }
+  100% {
+    scale: 2;
+    width: 100px;
+    border-radius: 5px;
+  }
+}
+@keyframes headingAfter {
+  0%,
+  100% {
+    right: 50%;
+    width: 50px;
+    height: 50px;
+    translate: 50% 50%;
+  }
+  50% {
+    width: 0px;
+    height: 0px;
+    right: 0%;
+  }
+  100% {
+    scale: 2;
+    width: 100px;
+    border-radius: 5px;
+  }
+}
