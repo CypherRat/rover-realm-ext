@@ -1,6 +1,6 @@
 # RoverRealm: All in one extension
 
-This is an extension that brings you all the joy of RoverRealm at one single place.
+This is an exciting new extension built for the RoverRealm community which brings a one stop glance of everything happening at RoverLand in it and more.
 
 # Steps to Use This Extension
 
