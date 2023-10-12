@@ -1,4 +1,4 @@
-# RoveRRealm: All in one extension
+# RoverRealm: All in one extension
 
 This is an extension that brings you all the joy of RoverRealm at one single place.
 
