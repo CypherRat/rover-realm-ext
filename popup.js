@@ -346,7 +346,10 @@ function cloneTemplate(template, data) {
 //   return fragment;
 // }
 function populateEvents(template, events) {
+  let fragmentWrapper = document.createElement("div");
   var fragment = document.createDocumentFragment();
+
+  fragmentWrapper.classList.add("flex", "flex-col", "space-y-4");
 
   events.sort(function (a, b) {
     if (a.status === "ongoing") return -1;
@@ -406,7 +409,9 @@ function populateEvents(template, events) {
     fragment.appendChild(clone);
   });
 
-  return fragment;
+  fragmentWrapper.appendChild(fragment);
+
+  return fragmentWrapper;
 }
 
 function startSlider(slides, currentSlide) {
