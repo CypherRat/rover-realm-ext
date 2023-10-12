@@ -50,14 +50,14 @@ body {
 }
 #welcome,
 #loading {
-  background-image: url("startScreen.svg");
+  background-image: url("../image/startScreen.svg");
   background-position: bottom center;
   background-size: 40% auto;
   background-repeat: no-repeat;
 }
 
 #loading {
-  background-image: url("loadingScreen.svg");
+  background-image: url("../image/loadingScreen.svg");
   background-position: top 25% center;
 }
 
@@ -80,7 +80,7 @@ body {
   display: none;
   right: -200px;
   width: 200px;
-  background-image: url("boat.svg");
+  background-image: url("../image/boat.svg");
   background-position: bottom center;
   background-repeat: no-repeat;
   background-size: 150px 150px;
@@ -253,7 +253,7 @@ body {
 }
 
 #banner {
-  background-image: url("welcomeRovers.jpg");
+  background-image: url("../image/welcomeRovers.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center -3px;
