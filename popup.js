@@ -268,7 +268,7 @@ function createContentNode(title, response) {
   } else if (title === "events") {
     clone = populateEvents(template, response);
   } else if (title === "claimToEarn") {
-    clone = cloneTemplate2(template, response);
+    clone = populateClaim2Earn(template, response);
   } else if (title === "claimToEarnWinners") {
     clone = populateWinners(template, response);
   }
@@ -276,74 +276,6 @@ function createContentNode(title, response) {
   return clone;
 }
 
-function cloneTemplate(template, data) {
-  const clone = template.content.cloneNode(true);
-  const slider = clone.querySelector('[data-id="slider"]');
-  const p = clone.querySelector('[data-id="p"]');
-  const claimButton = clone.querySelector('[data-id="claim"]');
-  const prevButton = clone.querySelector('[data-id="prev"]');
-  const nextButton = clone.querySelector('[data-id="next"]');
-  const dateTitle = clone.querySelector('[data-id="date"]');
-
-  // Create images for the slider
-  data.forEach((item, i) => {
-    const img = document.createElement("img");
-    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://woopsme.000webhostapp.com/rovers/interact/claimWand2Win?claim_id=${item.claim_id}`;
-    img.classList.add("w-full", "h-64", "object-cover");
-    if (i !== 0) img.style.display = "none";
-    slider.appendChild(img);
-  });
-
-  p.textContent = `Rover Edition Number: ${data[0].roverEditionNumber}`;
-  claimButton.onclick = () =>
-    (window.location.href = `https://woopsme.000webhostapp.com/rovers/interact/claimWand2Win?claim_id=${data[0].claim_id}`);
-  dateTitle.textContent = data[0].date;
-  // Slider functionality
-  let currentSlide = 0;
-  const slides = Array.from(slider.children);
-  startSlider(slides, currentSlide);
-
-  prevButton.onclick = () => {
-    currentSlide--;
-    if (currentSlide < 0) currentSlide = slides.length - 1;
-    updateSlides(slides, currentSlide);
-    updateData(data[currentSlide]);
-  };
-
-  nextButton.onclick = () => {
-    currentSlide++;
-    if (currentSlide >= slides.length) currentSlide = 0;
-    updateSlides(slides, currentSlide);
-    updateData(data[currentSlide]);
-  };
-
-  function updateData(item) {
-    p.textContent = `Rover Edition Number: ${item.roverEditionNumber}`;
-    claimButton.onclick = () =>
-      (window.location.href = `https://example.com/claim/${item.claim_id}`);
-    dateTitle.textContent = item.date;
-  }
-
-  return clone;
-}
-
-// function populateEvents(template, events) {
-//   var fragment = document.createDocumentFragment();
-//   events.forEach(function (event) {
-//     var clone = document.importNode(template.content, true);
-
-//     clone.querySelector("[data-id=title]").textContent = event.title;
-//     clone.querySelector("[data-id=description]").textContent =
-//       event.description;
-//     clone.querySelector("[data-id=status]").textContent = event.status;
-//     clone.querySelector("[data-id=timeline]").textContent = event.timeline;
-//     clone.querySelector("[data-id=url]").href = event.url;
-
-//     fragment.appendChild(clone);
-//   });
-
-//   return fragment;
-// }
 function populateEvents(template, events) {
   let fragmentWrapper = document.createElement("div");
   var fragment = document.createDocumentFragment();
@@ -493,7 +425,7 @@ function updateSlides(slides, currentSlide) {
   });
 }
 
-function cloneTemplate2(template, data) {
+function populateClaim2Earn(template, data) {
   const clone = template.content.cloneNode(true);
   const slider = clone.querySelector('[data-id="slider"]');
   const p = clone.querySelector('[data-id="p"]');
