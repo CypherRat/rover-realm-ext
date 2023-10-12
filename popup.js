@@ -270,8 +270,7 @@ function createContentNode(title, response) {
   } else if (title === "claimToEarn") {
     clone = cloneTemplate2(template, response);
   } else if (title === "claimToEarnWinners") {
-    clone.querySelector('[data-id="content"]').textContent =
-      JSON.stringify(response);
+    clone = populateWinners(template, response);
   }
 
   return clone;
@@ -410,6 +409,75 @@ function populateEvents(template, events) {
   });
 
   fragmentWrapper.appendChild(fragment);
+
+  return fragmentWrapper;
+}
+
+function populateWinners(template, winners) {
+  let fragmentWrapper = document.createElement("div");
+  var fragment = document.createDocumentFragment();
+
+  fragmentWrapper.classList.add("flex", "flex-col", "space-y-4");
+
+  // Add date as heading
+  let dateHeading = document.createElement("h2");
+  dateHeading.textContent = new Date(winners[0].date).toLocaleDateString(
+    "en-US",
+    { day: "numeric", month: "long" }
+  );
+
+  dateHeading.classList.add(
+    "text-center",
+    "text-2xl",
+    "font-bold",
+    "text-gray-400"
+  );
+  fragmentWrapper.appendChild(dateHeading);
+
+  winners.forEach(function (winner, index) {
+    var clone = document.importNode(template.content, true);
+
+    clone.querySelector("[data-id=winner_name]").textContent =
+      winner.winner_name;
+
+    let winnerList = clone.querySelector("[data-id=winner]");
+    if ((index + 1) % 2 === 0) winnerList.classList.add("bg-indigo-100");
+    if ((index + 1) % 2 === 1) winnerList.classList.add("bg-indigo-200");
+
+    // Check mark for winner_holds_qr_edition
+    let holderDiv = clone.querySelector("[data-id=holder]");
+    let holderSpan = document.createElement("span");
+    holderSpan.textContent = "Holder: ";
+    holderDiv.appendChild(holderSpan);
+    if (winner.winner_holds_qr_edition === "1") {
+      let checkMark = document.createElement("i");
+      checkMark.classList.add("fas", "fa-check-circle");
+      holderDiv.appendChild(checkMark);
+    } else {
+      let noCheckMark = document.createElement("i");
+      noCheckMark.classList.add("fas", "fa-circle");
+      holderDiv.appendChild(noCheckMark);
+    }
+
+    // Add link to winner's ERD address
+    let winnerLink = clone.querySelector("[data-id=winner_link]");
+    winnerLink.href = `https://explorer.multiversx.com/accounts/${winner.winner_erd_address}`;
+    winnerLink.textContent = `View on MultiversX`;
+
+    // Add order number
+    let orderNumber = clone.querySelector("[data-id=order_number]");
+    orderNumber.textContent = index + 1;
+
+    fragment.appendChild(clone);
+  });
+
+  fragmentWrapper.appendChild(fragment);
+
+  let note = document.createElement("p");
+  note.textContent = "Check back tomorrow at 0 UTC for today's winner.";
+  note.classList.add("text-center");
+
+  fragmentWrapper.appendChild(note);
 
   return fragmentWrapper;
 }
