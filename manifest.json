@@ -5,6 +5,11 @@
   "description": "RoverRealm brings you a one stop glance of everything happening at Rover Land here.",
   "permissions": ["tabs", "storage", "alarms"],
   "action": {
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    },
     "default_popup": "popup.html"
   },
   "background": {
